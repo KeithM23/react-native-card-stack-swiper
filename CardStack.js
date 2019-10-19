@@ -151,6 +151,30 @@ export default class CardStack extends Component {
       });
     }
   }
+  
+  componentWillReceiveProps(nextProps){ 
+    if (!this._isSameChildren(nextProps.children, this.props.children)) { 
+      this.setState({ 
+        cards: nextProps.children, 
+        cardA: nextProps.children[(this.state.topCard=='cardA') ? this.state.sindex-2 : this.state.sindex-1], 
+        cardB: nextProps.children[(this.state.topCard=='cardB') ? this.state.sindex-2 : this.state.sindex-1] 
+      }); 
+    } 
+  }
+  
+  _isSameChildren(a, b) { 
+    if (a.length != b.length){ 
+      return false; 
+    }
+    
+    for (let i in a) { 
+      if (a[i].key != b[i].key) { 
+        return false 
+      } 
+    } 
+    
+    return true 
+  }
 
   initDeck() {
     // check if we only have 1 child
